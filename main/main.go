@@ -36,11 +36,18 @@ func handleSearch(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	//初始化(将数据之类的获取到,预处理好等过程)
+	err := Init()
+	if err != nil {
+		fmt.Printf("初始化失败:%v\n", err)
+		return
+	}
+
 	//设置路由
 	http.HandleFunc("/index", handleIndex)
 	http.HandleFunc("/search", handleSearch)
 	//监听端口,如果端口不可用会返回错误,这里对错误进行处理
-	err := http.ListenAndServe(":8080", nil)
+	err = http.ListenAndServe(":8080", nil)
 	if err != nil {
 		fmt.Print("监听失败,出错:%v\n", err)
 		return
